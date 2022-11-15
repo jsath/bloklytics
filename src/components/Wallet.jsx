@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alchemy, Network } from "alchemy-sdk";
-const eth = require('./eth.png');
+const eth = require('./imgs/eth.png');
 
 
 

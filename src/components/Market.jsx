@@ -12,6 +12,18 @@ const Market = () => {
         color: 'red'
     }
 
+    const line = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '5px',
+        fontWeight: 'bold'
+    }
+
+    const symbol = {
+        color: 'gray',
+    }
+
     const green = {
         color: 'green'
     }
@@ -41,10 +53,9 @@ const Market = () => {
 
         <thead>
             <tr>
-            <th>Coins</th>
+            <th>Name</th>
             <th>Price</th>
             <th>Rank</th>
-            <th>Symbol</th>
             <th>1h%</th>
             <th>24h%</th>
             <th>7d%</th>
@@ -55,10 +66,9 @@ const Market = () => {
             filtered ? filtered.map((coin) => {
                 return (
                     <tr key={coin.id}>
-                        <td>{coin.name}</td>
+                        <td style={line}><img src={coin.icon} width='35px'/> {coin.name}  <span style={symbol}>{coin.symbol}</span></td>
                         <td>{coin.price.toFixed(3)}</td>
                         <td>{coin.rank}</td>
-                        <td>{coin.symbol}</td>
                         {coin.priceChange1h > 0 ?
                         <td style={green}>{coin.priceChange1d}</td>
                         :
@@ -74,7 +84,6 @@ const Market = () => {
                         :
                         <td style={red}>{coin.priceChange1w}</td>
                         }
-                        <td><img src={coin.icon} width='75px'/></td>
                     </tr>
                 )
             })

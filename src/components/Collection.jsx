@@ -2,7 +2,7 @@ import React, { useEffect, useState }from 'react'
 import { useParams } from 'react-router-dom'
 import { Alchemy, Network } from 'alchemy-sdk';
 import NFT from './NFT';
-import etherscan from './etherscan.png'
+import etherscan from './imgs/etherscan.png'
 
 const Collection = () => {
     //getting collection address through state 
