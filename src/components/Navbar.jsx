@@ -15,12 +15,12 @@ function Navbar() {
     };
     return (
     <nav className="nav">
-        <a href="/market" className="nav__brand">
+        <a href="/" className="nav__brand">
         <h1>Blocklytics</h1>
     </a>
     <ul className={active}>
         <li className="nav__item">
-        <a href="/" className="nav__link">
+        <a href="/wallet" className="nav__link">
             Connect Wallet
         </a>
         </li>

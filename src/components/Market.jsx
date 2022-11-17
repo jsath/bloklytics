@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom'
 import './styles.css'
 
 
-const client = new  W3CWebSocket('wss://ws.coincap.io/prices?assets=ALL')
-
 const Market = () => {
 
 
@@ -17,8 +15,8 @@ const Market = () => {
     const[coins, setCoins] = useState([]);
     const[search, setSearch] = useState('');
 
-    //live updates
 
+    const[searchBarText, setBarText] = useState('Search');
 
     //styling
 
@@ -37,7 +35,8 @@ const Market = () => {
         justifyContent: 'center',
         alignItems: 'center',
         gap: '5px',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'black'
     }
 
     const symbol = {
@@ -49,6 +48,27 @@ const Market = () => {
         alignItems: 'center'
     }
 
+    const input = {
+        width: '360px',
+		background: '#fff',
+		boxShadow: '0 6px 10px 0 rgba(0, 0, 0 , .1)',
+		border: '0px',
+		outline: '0px',
+		padding: '22px 18px'
+    };
+
+    const inputHeader = {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '60%',
+        alignItems: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    };
+
+    //Live Updates/original data rendering
+
     useEffect(() => {
         document.body.style.backgroundColor = 'white';
         Axios.get('https://api.coinstats.app/public/v1/coins?skip=0').then(
@@ -57,35 +77,33 @@ const Market = () => {
     }, []);
 
 
-    useEffect(() => {
+    //live updates
+    // const client = new  W3CWebSocket('wss://ws.coincap.io/prices?assets=ALL')
 
+    // useEffect(() => {
 
-        client.onclose = function(event) {
-            if (event.wasClean) {
-            alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-            } else {
-              // e.g. server process killed or network down
-              // event.code is usually 1006 in this case
-            alert('[close] Connection died');
-            }
-        };
+    //     client.onclose = function(event) {
+    //         if (event.wasClean) {
+    //         alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    //         } else {
+    //           // e.g. server process killed or network down
+    //           // event.code is usually 1006 in this case
+    //         alert('[close] Connection died');
+    //         }
+    //     };
         
-        client.onmessage = (msg) => {
-            let message = JSON.parse(msg.data);
-            for(let key in message){
-                let updateCoin = coins.find((coin) => (coin.id === key));
-                setCoins(coins.filter((coin) => {
-                    return coin.id !== key
-                }));
-                if(updateCoin){
-                    updateCoin.price = message[key]
-                    setCoins([...coins])
-                }
+    //     client.onmessage = (msg) => {
+    //         let message = JSON.parse(msg.data);
+    //         for(let key in message){
+    //             let updateCoin = coins.find((coin) => (coin.id === key));
+    //             if(updateCoin){
+    //                 updateCoin.price = message[key]
+    //                 setCoins([...coins])
+    //             }
 
-            }
-        }
-
-    }, [coins]);
+    //         }
+    //     }
+    // }, [coins]);
 
 
 
@@ -94,19 +112,18 @@ const Market = () => {
     });
 
 
+
+
     //formatting for numbers 
     const format = Intl.NumberFormat('en-US');
 
     return (
 
     <>
-    <h1>Market Data</h1>
-
-    <Trend/>
-    
-
-    <input type='text' placeholder='Search' onChange={(e) => {setSearch(e.target.value)}}/>
-
+    <div style={inputHeader}>
+    <h1>Trending Cryptocurrencies</h1>
+    <input placeholder={searchBarText} onChange={(e) => {setSearch(e.target.value)}} onMouseEnter={() => setBarText('Search for popular cryptocurrencies')} onMouseOut={()=>{setBarText("Search")}} style={input}/>
+    </div>
     <table className='styled-table'>
         <thead>
             <tr>
@@ -125,7 +142,7 @@ const Market = () => {
                 return (
                     <tr key={coin.id}>
                         <td>{coin.rank}</td>
-                        <td><Link to={`/market/coin/${coin.id}`}><span style={line}><img src={coin.icon} width='35px' alt={coin.symbol}/> {coin.name}  <span style={symbol}>{coin.symbol}</span></span></Link></td>
+                        <td><Link to={`/currencies/${coin.id}`}><span style={line}><img src={coin.icon} width='35px' alt={coin.symbol}/> {coin.name}  <span style={symbol}>{coin.symbol}</span></span></Link></td>
                         <td>${format.format(coin.price)}</td>
                         {coin.priceChange1h > 0 ?
                         <td style={green}><span style={center}><TrendingUp/>{coin.priceChange1d}%</span></td>

@@ -1,0 +1,39 @@
+body {font-family: Arial;}
+
+
+.tab {
+    overflow: scroll;
+    border: 1px solid #ccc;
+    background-color: #eff2f5;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
+    height: 50%;
+}
+
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    border-radius: 10px;
+    margin: 3px;
+}
+
+
+.tab button:hover {
+    background-color: #ccc;
+}
+
+
+.tab button.active {
+    background-color: rgb(0, 33, 65);
+    color: white;
+}

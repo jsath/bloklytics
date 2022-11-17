@@ -2,7 +2,6 @@ import './App.css';
 import Collection from './components/Collection';
 import MetaConnect from './components/MetaConnect';
 import Market from './components/Market';
-import CoinInfo from './components/CoinInfo';
 import Navbar from './components/Navbar';
 import CoinChart from './components/CoinChart';
 import {
@@ -17,9 +16,9 @@ function App() {
 
     <Navbar/>
     <Routes>
-        <Route path="/" element={<MetaConnect/>} />
-        <Route path="/market" element={<Market/>} />
-        <Route path="/market/coin/:id" element={<><CoinChart/><CoinInfo/></>} />
+        <Route path="/" element={<Market/>} />
+        <Route path="/wallet" element={<MetaConnect/>} />
+        <Route path="/currencies/:id" element={<><CoinChart/></>} />
         <Route path="/collection/:addy" element={<Collection/>} />
       </Routes>
     </div>

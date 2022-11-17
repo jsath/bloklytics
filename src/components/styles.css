@@ -41,3 +41,12 @@
     font-weight: bold;
     color: #009879;
 }
+
+.text{
+    color: black;
+}
+
+.text a{
+    color: blue;
+    text-decoration: underline;
+}

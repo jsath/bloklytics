@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Axios from 'axios'
 
-const CoinInfo = () => {
-    const { id } = useParams();
+const CoinInfo = (props) => {
+    const[id, setId] = useState(props.id);
     const[coin, setCoin] = useState();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const CoinInfo = () => {
     </div>
     </>
     :
-    <><h2>Coin Not Found</h2></>
+    <></>
     }
     </>
 
