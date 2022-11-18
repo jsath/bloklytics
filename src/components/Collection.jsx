@@ -10,9 +10,9 @@ const Collection = () => {
     const[collection, setCollection] = useState([]);
     const[collectionData, setCollectionData] = useState([]);
 
-    //setting up connection with alchemy 
+    //config
     const config = {
-        apiKey: "64QjIB-4lZRtVBmDWcvJNjsUjLaQEqhs",
+        apiKey: process.env.REACT_APP_ALCHEMY,
         network: Network.ETH_MAINNET,
     };
     const connection = new Alchemy(config);

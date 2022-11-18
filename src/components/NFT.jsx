@@ -50,7 +50,7 @@ const NFT = (props) => {
                 (nft.media[0].gateway).includes("mp4")? 
                 <>
 
-                <video controls autoPlay loop muted class='hover' style={img}>
+                <video controls autoPlay loop muted className='hover' style={img}>
                     <source src={nft.media[0].gateway} type="video/mp4" style={vidCenter}></source>
                 </video>
                 <h4 style={text}><strong>{nft.title}</strong><br/><Link style={text} to={`/collection/${nft.contract.address}`}>{nft.contract.name}</Link></h4>
@@ -58,19 +58,15 @@ const NFT = (props) => {
                 :
                 nft.contract.address === "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"?
                 <>
-                    <img src={nft.media[0].raw}alt={nft.title} style={img} class='hover'/>
+                    <img src={nft.media[0].raw}alt={nft.title} style={img} className='hover'/>
 
                     <h4 style={text}><strong>{nft.title}</strong><br/><Link style={text} to={`/collection/${nft.contract.address}`}>ENS: Ethereum Name Service</Link></h4>
                 </>
                 :
                 <>
-                <img src={nft.media[0].gateway}alt={nft.title} style={img} class='hover'/>
+                <img src={nft.media[0].gateway}alt={nft.title} style={img} className='hover'/>
                 <h4 style={text}><strong>{nft.title}</strong><br/><Link style={text} to={`/collection/${nft.contract.address}`}>{nft.contract.name}</Link></h4>
                 </>
-            }
-            {
-            <p>{JSON.stringify(nft.media[0])}</p>
-
             }
         </div>
     </>

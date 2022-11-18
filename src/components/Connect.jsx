@@ -7,8 +7,6 @@ const style = {
 };
 
 class Connect extends Component {
-
-    
     componentDidMount() {
     this.viewer = ModelViewer({
         pxNotRatio: true,
@@ -18,12 +16,9 @@ class Connect extends Component {
     });
     this.el.appendChild(this.viewer.container);
     }
-
     componentWillUnmount() {
     this.viewer.stopAnimation();
     }
-
-
     render() {
     return (
         <>

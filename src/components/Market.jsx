@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import Trend from './Trend';
 import { TrendingUp, TrendingDown } from './icons/icons';
 import { Link } from 'react-router-dom'
 import './styles.css'
@@ -13,9 +12,9 @@ const Market = () => {
 
 
     const[coins, setCoins] = useState([]);
+    //table sorting/search
     const[search, setSearch] = useState('');
-
-
+    //search bar text 
     const[searchBarText, setBarText] = useState('Search');
 
     //styling
@@ -57,15 +56,6 @@ const Market = () => {
 		padding: '22px 18px'
     };
 
-    const inputHeader = {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '60%',
-        alignItems: 'center',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-    };
 
     //Live Updates/original data rendering
 
@@ -78,36 +68,25 @@ const Market = () => {
 
 
     //live updates
-    // const client = new  W3CWebSocket('wss://ws.coincap.io/prices?assets=ALL')
+    const client = new  W3CWebSocket('wss://ws.coincap.io/prices?assets=ALL')
 
-    // useEffect(() => {
+    useEffect(() => {
+        client.onmessage = (msg) => {
+            let message = JSON.parse(msg.data);
+            for(let key in message){
+                let updateCoin = coins.find((coin) => (coin.id === key));
+                if(updateCoin){
+                    updateCoin.price = message[key]
+                    setCoins([...coins])
+                }
 
-    //     client.onclose = function(event) {
-    //         if (event.wasClean) {
-    //         alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-    //         } else {
-    //           // e.g. server process killed or network down
-    //           // event.code is usually 1006 in this case
-    //         alert('[close] Connection died');
-    //         }
-    //     };
-        
-    //     client.onmessage = (msg) => {
-    //         let message = JSON.parse(msg.data);
-    //         for(let key in message){
-    //             let updateCoin = coins.find((coin) => (coin.id === key));
-    //             if(updateCoin){
-    //                 updateCoin.price = message[key]
-    //                 setCoins([...coins])
-    //             }
-
-    //         }
-    //     }
-    // }, [coins]);
+            }
+        }
+    }, [coins]);
 
 
 
-    const filtered = coins.filter((coin) => {
+    let filtered = coins.filter((coin) => {
         return coin.name.toLowerCase().includes(search.toLowerCase())
     });
 
@@ -120,7 +99,7 @@ const Market = () => {
     return (
 
     <>
-    <div style={inputHeader}>
+    <div className='inputHeader'>
     <h1>Trending Cryptocurrencies</h1>
     <input placeholder={searchBarText} onChange={(e) => {setSearch(e.target.value)}} onMouseEnter={() => setBarText('Search for popular cryptocurrencies')} onMouseOut={()=>{setBarText("Search")}} style={input}/>
     </div>
@@ -130,10 +109,10 @@ const Market = () => {
             <th>#</th>
             <th>Name</th>
             <th>Price</th>
-            <th>1h%</th>
-            <th>24h%</th>
+            <th className='desktop'>1h%</th>
+            <th className='desktop'>24h%</th>
             <th>7d%</th>
-            <th>Market Cap</th>
+            <th className='desktop'>Market Cap</th>
             </tr>
         </thead>
         <tbody>
@@ -145,21 +124,21 @@ const Market = () => {
                         <td><Link to={`/currencies/${coin.id}`}><span style={line}><img src={coin.icon} width='35px' alt={coin.symbol}/> {coin.name}  <span style={symbol}>{coin.symbol}</span></span></Link></td>
                         <td>${format.format(coin.price)}</td>
                         {coin.priceChange1h > 0 ?
-                        <td style={green}><span style={center}><TrendingUp/>{coin.priceChange1d}%</span></td>
+                        <td style={green} className='desktop'><span style={center}><TrendingUp/>{coin.priceChange1d}%</span></td>
                         :
-                        <td style={red}><span style={center}><TrendingDown/>{Math.abs(coin.priceChange1d)}%</span></td>
+                        <td style={red} className='desktop'><span style={center}><TrendingDown/>{Math.abs(coin.priceChange1d)}%</span></td>
                         }
                         {coin.priceChange1d > 0 ?
-                        <td style={green}><span style={center}><TrendingUp/>{coin.priceChange1d}%</span></td>
+                        <td style={green} className='desktop'><span style={center}><TrendingUp/>{coin.priceChange1d}%</span></td>
                         :
-                        <td style={red}><span style={center}><TrendingDown/>{Math.abs(coin.priceChange1d)}%</span></td>
+                        <td style={red} className='desktop'><span style={center}><TrendingDown/>{Math.abs(coin.priceChange1d)}%</span></td>
                         }
                         {coin.priceChange1w > 0 ?
                         <td style={green}><span style={center}><TrendingUp/>{coin.priceChange1w}%</span></td>
                         :
                         <td style={red}><span style={center}><TrendingDown/>{Math.abs(coin.priceChange1w)}%</span></td>
                         }
-                        <td>${format.format(coin.marketCap)}</td>
+                        <td className='desktop'>${format.format(coin.marketCap)}</td>
                         
                     </tr>
                 )

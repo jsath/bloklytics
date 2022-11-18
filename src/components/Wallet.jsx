@@ -4,15 +4,15 @@ const eth = require('./imgs/eth.png');
 
 
 
+
 const Wallet = (props) => {
 
 
     const [addy, setAddy] = useState(props.addy);
-    const [showAddy, setShowAddy] = useState(false);
     const [ENS, setENS] = useState("");
 
     const config = {
-        apiKey: "64QjIB-4lZRtVBmDWcvJNjsUjLaQEqhs",
+        apiKey: process.env.REACT_APP_ALCHEMY,
         network: Network.ETH_MAINNET,
     };
     const alchemy = new Alchemy(config);
@@ -62,38 +62,21 @@ const Wallet = (props) => {
         marginTop: "15px"
     };
 
-    const hover = {
-        opacity: "1.1"
-    };
+
 
     return (
     <>
 
     <div style={walletStyle}>
 
-        { 
-        //fix hover opacity change
-            showAddy ? 
-            <img style={hover} src={eth} width="auto" height="50px"
-                onMouseEnter={() => setShowAddy(true)}
-                onMouseLeave={() => setShowAddy(false)}
-                alt="eth"/>
-            :
-            <img src={eth} width="auto" height="50px"
-                onMouseEnter={() => setShowAddy(true)}
-                onMouseLeave={() => setShowAddy(false)}
-                alt="eth"/>
-        }
+
+        <img src={eth} width="auto" height="50px" alt="eth"/>
+
         {
-            showAddy ? 
-            <>
-            <h3 style={text}>{props.addy}</h3>
-            </>
-            :
-            ENS ? 
+            ENS.length > 1 ? 
             <h3 style={text}>{ENS.ownedNfts[0].title}</h3>
             :
-            ''
+            <h3 style={text}>{addy}</h3>
         }
 
         

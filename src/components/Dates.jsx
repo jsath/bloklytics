@@ -16,35 +16,42 @@ const Dates = (props) => {
 
     const oneDay = (e) => {
         updateTabs(e);
-        props.setStart(end-86400000);
-        props.setInt('h1')
+        let day = 86400000/1000
+        props.setStart(end-day);
+        props.setInt('m30')
+        props.setDateFormat('HH:mm:ss')
     }
 
     const sevenDay = (e) => {
         updateTabs(e);
-        // let newInput = props.userInput;
-        // newInput.start = props.userInput.end-604800000
-        // console.log(newInput)
-        props.setStart(end-604800000)
-        props.setInt('h12')
+        let daySeven = 604800000/1000
+        props.setStart(end-daySeven)
+        props.setInt('h2')
+        props.setDateFormat('D-YYYY h:mma')
     }
 
     const oneMonth = (e) => {
         updateTabs(e);
-        props.setStart(end-2629743000);
-        props.setInt('d1')
+        let month = 2629743000/1000
+        props.setStart(end-month);
+        props.setInt('h12')
+        props.setDateFormat("D MMM 'YY")
     }
 
     const threeMonth = (e) => {
         updateTabs(e);
-        props.setStart(end-7889229000);
-        props.setInt('d1')
+        let monthThree = 7889229000/1000
+        props.setStart(end-monthThree);
+        props.setInt('h12')
+        props.setDateFormat("D MMM 'YY")
     }
 
     const ytd = (e) => {
         updateTabs(e);
-        props.setStart(end-31556926000);
+        let yearToDate = 31556926000/1000
+        props.setStart(end-yearToDate);
         props.setInt('d1')
+        props.setDateFormat("D MMM 'YY")
     }
 
 

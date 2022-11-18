@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Stats from './Stats';
-import Wallet from './Wallet';
 import Connect from './Connect';
+import { Go } from './icons/icons';
 
 
 const MetaConnect = () => {
@@ -11,7 +11,7 @@ const MetaConnect = () => {
     //const [accounts, setAccounts] = useState("")
 
     const btnStyle = {
-        backgroundColor: "#027dd5",
+        backgroundColor: "rgb(0, 33, 65)",
         color: "rgb(255,255,255)",
         borderRadius: "25px",
         height: "50px", 
@@ -30,37 +30,33 @@ const MetaConnect = () => {
         getAccount()
     }, [walletAddress]);
 
-    
-    window.ethereum.on('accountsChanged', async function (accounts) {
-        if(window.ethereum){
-        try {
-            const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-            });
-            setWalletAddress(accounts[0]);
-        } catch (error) {
-            console.log('Error connecting to MetaMask');
-        }
-        } else {
-        alert('Meta Mask not detected');
-        } 
-    })
+    if(typeof window.ethereum !== 'undefined'){
+        window.ethereum.on('accountsChanged', async function (accounts) {
+            if(window.ethereum){
+            try {
+                const accounts = await window.ethereum.request({
+                method: "eth_requestAccounts",
+                });
+                setWalletAddress(accounts[0]);
+            } catch (error) {
+                alert('Error connecting to MetaMask');
+            }
+            }
+        })
+    }
 
 
 
     async function getAccount() { 
-        if(window.ethereum) {
+        if(typeof window.ethereum !== 'undefined'){
         try {
             const accounts = await window.ethereum.request({
             method: "eth_requestAccounts", 
             });
-            console.log(accounts)
             setWalletAddress(accounts[0]);
-        } catch (error) {
-            console.log('Error connecting to MetaMask');
+        } catch(error) {
+            alert('Error connecting to MetaMask');
         }
-        } else {
-        alert('Meta Mask not detected');
         }
     }
 
@@ -70,22 +66,22 @@ const MetaConnect = () => {
     <>
         {
         walletAddress ?
-        <Wallet addy={walletAddress}/>
+        ''
         :
         <div>
             <Connect/>
             <button onClick={getAccount} style={btnStyle}>Connect Wallet</button>
         </div>
-    }
+        }
 
 
 
-    {
-        walletAddress ? 
-        <Stats addy={walletAddress}/>
-        :
-        <p style={text}>Connect to see assets</p>
-    }
+        {
+            walletAddress ? 
+            <Stats addy={walletAddress}/>
+            :
+            <a href='https://metamask.io/' target="_blank" rel="noreferrer noopener"><h1 style={text}>GET METAMASK<Go/></h1></a>
+        }
 
     
     </>

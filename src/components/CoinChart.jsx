@@ -40,9 +40,13 @@ const[coin, setCoin] = useState();
 
 //time changing for graph
 const date = Date.now();
-const[end, setEnd] = useState(date);
-const[start, setStart] = useState(end-31556926000)
+const[end] = useState(Math.floor(date/1000));
+const[start, setStart] = useState(end-31556926);
+//const[start, setStart] = useState(end-31556926000)
 const[int, setInt] = useState('d1');
+const[dateFormat, setDateFormat] = useState("D MMM 'YY")
+
+/*Change above state variables to seconds UNIX timestamp to use old coincap api */
 
 
 
@@ -50,44 +54,31 @@ const[int, setInt] = useState('d1');
 const format = Intl.NumberFormat('en-US');
 
 useEffect(() => {
-    // Axios.get(`https://api.coincap.io/v2/assets/${id}`).then(
-    //     (res) => {setCoin(res.data.data)}
-    // )
-
-    Axios.get(`https://api.coingecko.com/api/v3/coins/${id}?localization=false`).then(
-        (res) => {setCoin(res.data)}
+    Axios.get(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`).then(
+        (res) => {setCoin(res.data);setPrice(res.data.market_data.current_price.usd)}
     )
 }, [id]);
 
 
 useEffect(() => {
-    Axios.get(`https://api.coincap.io/v2/assets/${id}/history?interval=${int}&start=${start}&end=${end}`).then(
-        (res) => {setResponse(res.data.data)}
+    Axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=usd&from=${start}&to=${end}`).then(
+        (res) => {setResponse(res.data)}
     );
-},[id, start, int]);
+
+},[id, start, int, end]);
 
 //live updates
-// const client = new  W3CWebSocket(`wss://ws.coincap.io/prices?assets=${id}`)
-// useEffect(() => {
-
-//     client.onclose = function(event) {
-//         if (event.wasClean) {
-//         alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-//         } else {
-//           // e.g. server process killed or network down
-//           // event.code is usually 1006 in this case
-//         alert('[close] Connection died');
-//         }
-//     };
+const client = new  W3CWebSocket(`wss://ws.coincap.io/prices?assets=${id}`)
+useEffect(() => {
     
-//     client.onmessage = (msg) => {
-//         let message = JSON.parse(msg.data);
-//         for(let key in message){
-//             setPrice(message[key])
-//         }
+    client.onmessage = (msg) => {
+        let message = JSON.parse(msg.data);
+        for(let key in message){
+            setPrice(message[key])
+        }
 
-//     }
-// }, [id, coin]);
+    }
+}, [id, coin]);
 
 
 //styling
@@ -116,30 +107,31 @@ const topHolder = {
     width: '80%',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginLeft: '20%'
+    marginLeft: '24vw',
+    marginRight: '2vw'
 
 }
 
 const chartContain = {
-    position: 'relative',
     height:'30vh',
     width:'60vw',
-    marginLeft: 'auto',
-    marginRight: 'auto'
+    marginLeft: 'auto'
 };
 
 const chartDescription = {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '90%',
     justifyContent: 'center',
     gap: '15px',
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
+    verticalAlign: 'text-top'
 };
 
 const description = {
-    width: '25%'
+    width: '25%',
+    marginTop: '-40vh'
 };
 
 
@@ -158,7 +150,7 @@ const line = {
 if(!response) {
     setInterval(() => {
         setLoad("Coin Not Found")
-    },2000);
+    },1500);
 return (
     <div>
         { load === 'Loading' ?
@@ -168,7 +160,7 @@ return (
         </>
         :
         <>
-        <span><h1 style={mid}>{load}</h1><Link to={'/market'}><span style={blue}><Back/></span></Link></span>
+        <span><h1 style={mid}>{load}</h1><Link to={'/'}><span style={blue}><Back/></span></Link></span>
         </>
         }
     </div>
@@ -177,7 +169,7 @@ return (
 if(!coin) {
     setInterval(() => {
         setLoad("Coin Not Found")
-    },2000);
+    },1500);
 return (
     <div>
         { load === 'Loading' ?
@@ -187,32 +179,31 @@ return (
         </>
         :
         <>
-        <span><h1 style={mid}>{load}</h1><Link to={'/market'}><span style={blue}><Back/></span></Link></span>
+        <span><h1 style={mid}>{load}</h1><Link to={'/'}><span style={blue}><Back/></span></Link></span>
         </>
         }
     </div>
 )
 }
 
-let coinChartData = response.map(value => ({ x: value.time, y: value.priceUsd }));
-let rgb = ''
-response[response.length-1].priceUsd > response[0].priceUsd ? rgb = 'rgb(0,128,0)' :  rgb = 'rgb(255,0,0)'
-console.log(response)
-let options = {
-responsive: true
-}
-let data = {
-labels: coinChartData.map(value => moment(value.x).format('DD MMM YYYY')),
-datasets: [
-    {
-    fill: true,
-    label: id,
-    data: coinChartData.map(val => val.y),
-    borderColor: 'black',
-    backgroundColor: rgb
+    let coinChartData = response.prices.map(value => ({ x: value[0], y: value[1] }))
+    let rgb = ''
+    response.prices[response.prices.length-1][1] > response.prices[0][1] ? rgb = 'rgba(0,128,0,0.6)' :  rgb = 'rgba(255, 0, 0, 0.6)'
+    let options = {
+    responsive: true
     }
-]
-}
+    let data = {
+    labels: coinChartData.map(value => moment(value.x).format(dateFormat)),
+    datasets: [
+        {
+        fill: true,
+        label: coin.name,
+        data: coinChartData.map(val => val.y),
+        borderColor: 'black',
+        backgroundColor: rgb
+        }
+    ]
+    }
 
 return (
 <div>
@@ -226,26 +217,66 @@ return (
         ${price ? format.format(price) : format.format(parseInt(coin.market_data.current_price.usd).toFixed(5))}
         </h2>
         </span>
-        <Dates end={end} setStart={setStart} setInt={setInt}/>
+        <Dates end={end} setStart={setStart} setInt={setInt} setDateFormat={setDateFormat}/>
     </div>
     <div>
     <span style={chartDescription}>
+
+    <div style={chartContain}>
+    <Line options={options} data={data} />
+    </div>
+
+
     <div style={description}>
-    <h4>24h Low: <span style={red}>${format.format(coin.market_data.low_24h.usd)}</span>&nbsp; 24h High: <span style={green}>${format.format(coin.market_data.high_24h.usd)}</span></h4>
-    <h4>Market Cap: ${format.format(coin.market_data.market_cap.usd)}</h4>
+    <table className='styled-table2'>
+        <thead>
+            <tr>
+                <th>Market Stats</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Market Cap: </strong>${format.format(coin.market_data.market_cap.usd)}</td>
+        </tr>
+        <tr>
+            <td><strong>Market Cap Rank: </strong>#{coin.market_cap_rank}</td>
+        </tr>
+        <tr>
+            <td><strong>Total Volume(USD): </strong>${format.format(coin.market_data.total_volume.usd)}</td>
+        </tr>
+        <tr>
+            <td><strong>24h Low: </strong><span style={red}>${format.format(coin.market_data.low_24h.usd)}</span>&nbsp;</td>
+            </tr>
+            <tr>
+            <td><strong> 24h High: </strong><span style={green}>${format.format(coin.market_data.high_24h.usd)}</span></td>
+        </tr>
+        <tr>
+            <td><strong>24h Change(USD): </strong>{coin.market_data.price_change_24h_in_currency.usd > 0 ? <span style={green}>${format.format(coin.market_data.price_change_24h_in_currency.usd)}</span>: <span style={red}>${format.format(coin.market_data.price_change_24h_in_currency.usd)}</span>}</td>
+        </tr>
+        </tbody>
+    </table>
     {
     coin.description?
     <>
-    <h3>Coin Description</h3>
-    <p dangerouslySetInnerHTML={{ __html: coin.description.en }} className='text'></p>
+    <table className='styled-table2'>
+        <thead>
+            <tr>
+            <th>{coin.name} Summary</th>
+            </tr>
+        </thead>
+
+        <tbody className='textHolder'>
+            <tr>
+            <td dangerouslySetInnerHTML={{ __html: coin.description.en }} className='text'></td>
+            </tr>
+        </tbody>
+    </table>
     </>
     : <></>
     }
     </div>
-    <div style={chartContain}>
-    <Line options={options} data={data} />
-    </div>
     </span>
+
     </div>
 
 

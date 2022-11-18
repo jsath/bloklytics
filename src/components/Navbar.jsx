@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../navbar.css";
+import logo from './imgs/logo.png'
+
 
 function Navbar() {
     const [active, setActive] = useState("nav__menu");
@@ -16,32 +18,19 @@ function Navbar() {
     return (
     <nav className="nav">
         <a href="/" className="nav__brand">
-        <h1>Blocklytics</h1>
+        <div className='logo_header'>
+        <img src={logo} height='50vh'alt='Blocklytics'/><h1>Bloklytics</h1>
+        </div>
     </a>
     <ul className={active}>
         <li className="nav__item">
         <a href="/wallet" className="nav__link">
-            Connect Wallet
+            <h3>View Wallet</h3>
         </a>
         </li>
         <li className="nav__item">
-        <a href="/" className="nav__link">
-            About
-        </a>
-        </li>
-        <li className="nav__item">
-        <a href="/" className="nav__link">
-            Portfolio
-        </a>
-        </li>
-        <li className="nav__item">
-        <a href="/" className="nav__link">
-            P/L
-        </a>
-        </li>
-        <li className="nav__item">
-        <a href="/" className="nav__link">
-            NFTS
+        <a href="/wallet/swap" className="nav__link">
+            <h3>Currency Converter</h3>
         </a>
         </li>
     </ul>

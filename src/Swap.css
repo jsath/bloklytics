@@ -1,0 +1,168 @@
+@import url('https://fonts.google.com/specimen/DM+Sans');
+
+
+body{
+    font-family: 'DM Sans';
+}
+
+.swapButton{
+    background-color: rgb(0, 33, 65);
+    color: white;
+    width: 15vw;
+    border-radius: 20px;
+    font-size: 25px;
+    min-width: 30px;
+    height: fit-content;
+    padding: 10px;
+}
+.swapBox{
+    margin-top: 5%;
+    color: white;
+    display: flex;
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30vh;
+    background-color: #0d111c;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.swapHolder{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.token_select{
+    padding:5px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+
+}
+
+.token_select:hover{
+    background-color: #464646;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+
+.addyHolder{
+    background-color: #0d111c;
+    width: 18vw;
+    min-width: fit-content;
+    float: right;
+    margin: 15px;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.modalHolder{
+    background-color: #0d111c;
+    max-width: 28vw;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 50vh;
+    overflow: scroll;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tokenSearch{
+    width: 50%;
+    height: 2.8rem;
+    background: #f5f5f5;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+}
+
+.searchHolder{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.eachToken{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin: auto;
+}
+
+.center{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modalTop{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn-close{
+    height: fit-content;
+    width: auto;
+    padding: 5px;
+    border-radius: 2px;
+    background-color: red;
+}
+
+.optionToken{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    height: 5vh;
+}
+
+.optionToken:hover{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    height: 5vh;
+    opacity: 0.6;
+    width: 10%;
+}
+
+
+.form-control {
+    border: 0;
+    height: fit-content;
+    width: 50%;
+    padding: 3px 10px;
+    box-shadow: 0px 4px 0px #DDD;
+    transition: box-shadow 100ms ease-in;
+    margin-bottom: 4px;
+}
+
+.form-control:focus {
+    box-shadow: 0px 4px 0px #BCBCBC;
+    outline: none;
+}

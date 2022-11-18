@@ -4,6 +4,7 @@ import MetaConnect from './components/MetaConnect';
 import Market from './components/Market';
 import Navbar from './components/Navbar';
 import CoinChart from './components/CoinChart';
+import Swap from './components/Swap';
 import {
   Routes,
   Route
@@ -18,8 +19,9 @@ function App() {
     <Routes>
         <Route path="/" element={<Market/>} />
         <Route path="/wallet" element={<MetaConnect/>} />
-        <Route path="/currencies/:id" element={<><CoinChart/></>} />
+        <Route path="/currencies/:id" element={<CoinChart/>} />
         <Route path="/collection/:addy" element={<Collection/>} />
+        <Route path="/wallet/swap" element={<Swap/>} />
       </Routes>
     </div>
   );
