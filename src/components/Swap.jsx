@@ -29,7 +29,7 @@ const Swap = (props) => {
 
     useEffect(() => {
         document.body.style.backgroundColor = '#202225';
-        getAccount();
+        //getAccount();
         getTokens();
 
     }, []);
@@ -42,35 +42,35 @@ const Swap = (props) => {
     }
 
 
-    async function getAccount() { 
-        if(typeof window.ethereum !== 'undefined'){
-        try {
-            const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts", 
-            });
-            setWalletAddress(accounts[0]);
-        } catch(error) {
-            alert('Error connecting to MetaMask');
-        }/*finally{
-            document.getElementById("swap_button").disabled = false;
-        }*/
-        }
-    }
+    // async function getAccount() { 
+    //     if(typeof window.ethereum !== 'undefined'){
+    //     try {
+    //         const accounts = await window.ethereum.request({
+    //         method: "eth_requestAccounts", 
+    //         });
+    //         setWalletAddress(accounts[0]);
+    //     } catch(error) {
+    //         alert('Error connecting to MetaMask');
+    //     }/*finally{
+    //         document.getElementById("swap_button").disabled = false;
+    //     }*/
+    //     }
+    // }
 
-    if(typeof window.ethereum !== 'undefined'){
-        window.ethereum.on('accountsChanged', async function (accounts) {
-            if(window.ethereum){
-            try {
-                const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-                });
-                setWalletAddress(accounts[0]);
-            } catch (error) {
-                alert('Error connecting to MetaMask');
-            }
-            }
-        })
-    }
+    // if(typeof window.ethereum !== 'undefined'){
+    //     window.ethereum.on('accountsChanged', async function (accounts) {
+    //         if(window.ethereum){
+    //         try {
+    //             const accounts = await window.ethereum.request({
+    //             method: "eth_requestAccounts",
+    //             });
+    //             setWalletAddress(accounts[0]);
+    //         } catch (error) {
+    //             console.log('Error connecting to MetaMask');
+    //         }
+    //         }
+    //     })
+    // }
 
 
     let filtered = tokens.filter((token) => {
@@ -186,7 +186,7 @@ const Swap = (props) => {
     return (
     <>
     <div className='swapBox'>
-        
+    
         <h1>Currency Converter</h1>
 
         <div className='swapHolder'>

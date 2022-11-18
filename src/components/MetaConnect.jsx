@@ -55,7 +55,7 @@ const MetaConnect = () => {
             });
             setWalletAddress(accounts[0]);
         } catch(error) {
-            alert('Error connecting to MetaMask');
+            console.log('Error connecting to MetaMask');
         }
         }
     }
