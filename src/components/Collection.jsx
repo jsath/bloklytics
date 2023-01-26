@@ -32,7 +32,6 @@ const Collection = () => {
 
 
     //styling
-
     const container = {
         display: "flex",
         flexDirection: "row",
