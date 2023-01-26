@@ -5,24 +5,14 @@ body{
     font-family: 'DM Sans';
 }
 
-.swapButton{
-    background-color: rgb(0, 33, 65);
-    color: white;
-    width: 15vw;
-    border-radius: 20px;
-    font-size: 25px;
-    min-width: 30px;
-    height: fit-content;
-    padding: 10px;
-}
 .swapBox{
-    margin-top: 5%;
+    margin-top: 2vh;
     color: white;
     display: flex;
     width: 30vw;
     margin-left: auto;
     margin-right: auto;
-    height: 30vh;
+    height: 35vh;
     min-height: fit-content;
     min-width: fit-content;
     background-color: #0d111c;
@@ -80,8 +70,9 @@ body{
 
 .modalHolder{
     background-color: #0d111c;
-    max-width: 28vw;
+    max-width: 32vw;
     min-width: fit-content;
+    padding: 5%;
     border-radius: 5px;
     margin-left: auto;
     margin-right: auto;

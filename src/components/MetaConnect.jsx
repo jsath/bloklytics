@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ConnectWallet } from "@thirdweb-dev/react";
+import {NotificationManager} from 'react-notifications';
 import Stats from './Stats';
 import Connect from './Connect';
 import { Go } from './icons/icons';
@@ -22,11 +23,6 @@ const MetaConnect = () => {
         margin-left: auto;
         margin-right: auto;
     `
-
-
-    
-
-
     useEffect(() => {
         document.body.style.backgroundColor = '#202225';
         getAccount()
@@ -41,7 +37,7 @@ const MetaConnect = () => {
                 });
                 setWalletAddress(accounts[0]);
             } catch (error) {
-                alert('Error connecting to MetaMask');
+                NotificationManager.error('Error connecting to wallet');
             }
             }
         })
@@ -55,7 +51,7 @@ const MetaConnect = () => {
             });
             setWalletAddress(accounts[0]);
         } catch(error) {
-            console.log('Error connecting to MetaMask');
+            NotificationManager.error('Error connecting to wallet');
         }
         }
     }
@@ -69,7 +65,7 @@ const MetaConnect = () => {
         <>
             <Connect/>
             <ThirdHolder>
-                <ConnectWallet accentcolor="#f213a4" />
+                <ConnectWallet accentcolor="#002141" />
             </ThirdHolder>
         </>
         }

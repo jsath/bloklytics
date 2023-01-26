@@ -6,6 +6,8 @@ import MetaConnect from './components/MetaConnect';
 import Market from './components/Market';
 import Navbar from './components/Navbar';
 import CoinChart from './components/CoinChart';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 import Swap from './components/Swap';
 import {
   Routes,
@@ -29,6 +31,7 @@ function App() {
         <Route path="/wallet/swap" element={<Swap/>} />
       </Routes>
     </ThirdwebProvider>
+    <NotificationContainer/>
     <Analytics />
     </div>
   );
