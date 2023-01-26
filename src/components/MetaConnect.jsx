@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { ConnectWallet } from "@thirdweb-dev/react";
 import Stats from './Stats';
 import Connect from './Connect';
 import { Go } from './icons/icons';
+import styled from 'styled-components';
 
 
 const MetaConnect = () => {
@@ -10,19 +12,19 @@ const MetaConnect = () => {
     const [walletAddress, setWalletAddress] = useState("");
     //const [accounts, setAccounts] = useState("")
 
-    const btnStyle = {
-        backgroundColor: "rgb(0, 33, 65)",
-        color: "rgb(255,255,255)",
-        borderRadius: "25px",
-        height: "50px", 
-        width: "200px",
-        fontSize: "22px"
-    };
+    const Text = styled.h3`
+        color: "white";
+        font-decoration: underline; 
+    `
 
-    const text = {
-        color: "white"
-    };
+    const ThirdHolder = styled.div`
+        width: fit-content; 
+        margin-left: auto;
+        margin-right: auto;
+    `
 
+
+    
 
 
     useEffect(() => {
@@ -45,8 +47,6 @@ const MetaConnect = () => {
         })
     }
 
-
-
     async function getAccount() { 
         if(typeof window.ethereum !== 'undefined'){
         try {
@@ -60,30 +60,25 @@ const MetaConnect = () => {
         }
     }
 
-
-
     return (
     <>
         {
         walletAddress ?
         ''
         :
-        <div>
+        <>
             <Connect/>
-            <button onClick={getAccount} style={btnStyle}>Connect Wallet</button>
-        </div>
+            <ThirdHolder>
+                <ConnectWallet accentcolor="#f213a4" />
+            </ThirdHolder>
+        </>
         }
-
-
-
         {
             walletAddress ? 
             <Stats addy={walletAddress}/>
             :
-            <a href='https://metamask.io/' target="_blank" rel="noreferrer noopener"><h1 style={text}>GET METAMASK<Go/></h1></a>
+            <a href='https://moralis.io/what-is-a-web3-wallet-web3-wallets-explained/' target="_blank" rel="noreferrer noopener"><Text>If you don't have a wallet, here's how to start<Go/></Text></a>
         }
-
-    
     </>
     )
 }

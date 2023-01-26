@@ -107,8 +107,12 @@ const Swap = (props) => {
             (res) => {setPriceData(res.data)}
         ).catch((err)=>{console.log(err)})
 
-        document.getElementById('to_amount').value = priceData.buyAmount / (10 ** trade.to.decimals);
-        document.getElementById('gas_estimate').innerHTML = "Estimated Gas:" + priceData.estimatedGas;
+        if((priceData.buyAmount / (10 ** trade.to.decimals)) < 1 || isNaN((priceData.buyAmount / (10 ** trade.to.decimals)))){
+            document.getElementById('to_amount').value = '< 1';
+        }else{
+            document.getElementById('to_amount').value = priceData.buyAmount / (10 ** trade.to.decimals);
+            document.getElementById('gas_estimate').innerHTML = "Estimated Gas:" + priceData.estimatedGas;
+        }
     }
 
 

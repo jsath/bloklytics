@@ -70,6 +70,7 @@ const Market = () => {
     //live updates
     const client = new  W3CWebSocket('wss://ws.coincap.io/prices?assets=ALL')
 
+
     useEffect(() => {
         client.onmessage = (msg) => {
             let message = JSON.parse(msg.data);
@@ -79,7 +80,6 @@ const Market = () => {
                     updateCoin.price = message[key]
                     setCoins([...coins])
                 }
-
             }
         }
     }, [coins]);

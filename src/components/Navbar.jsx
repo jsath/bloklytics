@@ -30,7 +30,7 @@ function Navbar() {
         </li>
         <li className="nav__item">
         <a href="/wallet" className="nav__link">
-            <h3>View Wallet</h3>
+            <h3>Connect Wallet</h3>
         </a>
         </li>
         <li className="nav__item">

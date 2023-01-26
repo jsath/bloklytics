@@ -1,4 +1,6 @@
 import './App.css';
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
+import { Analytics } from '@vercel/analytics/react';
 import Collection from './components/Collection';
 import MetaConnect from './components/MetaConnect';
 import Market from './components/Market';
@@ -12,9 +14,12 @@ import {
 
 
 function App() {
+
+  const activeChainId = ChainId.Ethereum;
+
   return (
     <div className="App">
-
+    <ThirdwebProvider desiredChainId={activeChainId}>
     <Navbar/>
     <Routes>
         <Route path="/" element={<Market/>} />
@@ -23,6 +28,8 @@ function App() {
         <Route path="/collection/:addy" element={<Collection/>} />
         <Route path="/wallet/swap" element={<Swap/>} />
       </Routes>
+    </ThirdwebProvider>
+    <Analytics />
     </div>
   );
 }
